@@ -1,23 +1,22 @@
 # import flask
-from flask import Flask
-from flask.ext import restful
+from flask import Flask, render_template
+
 
 # create app
 app = Flask(__name__)
-# create api
-api = restful.Api(app)
 
-# list all of the resorts
-class SkiResorts(restful.Resource):
-    def get(self):
-        return 'Work in progress!'
+# route decorator
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-# add SkiResorts resource
-api.add_resource(SkiResorts, '/SkiResorts')
+@app.route('/api')
+def api():
+    return render_template('api.html')
+
 
 # run the app
 if __name__ == '__main__':
+    # reload on change of file
+    app.debug = True
     app.run()
-
-
-
