@@ -9,7 +9,9 @@ from flask import Flask, render_template, jsonify, abort, make_response, request
 from flask.ext.httpauth import HTTPBasicAuth
 
 # create app
-app = Flask(__name__)
+app = Flask(__name__, instance_relative_config=True)
+app.config.from_object('config')
+app.config.from_pyfile('config.py')
 auth = HTTPBasicAuth()
 
 # splash page
@@ -21,7 +23,7 @@ def index():
 @auth.get_password
 def get_password(username):
     if username == 'yknot':
-        return 'ilovesnow'
+        return 'python'
     return None
 
 # wrong login
@@ -125,6 +127,5 @@ def bad_request(error):
 
 # run the app
 if __name__ == '__main__':
-    # reload on change of file
-    app.debug = True
+    # start app
     app.run()
