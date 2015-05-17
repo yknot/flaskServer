@@ -7,11 +7,14 @@
 from flask import Flask, render_template, jsonify, abort, make_response, request
 # to authorize users
 from flask.ext.httpauth import HTTPBasicAuth
+import os
+
 
 # create app
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_object('config')
-app.config.from_pyfile('config.py')
+if !os.environ.get('IS_HEROKU', None):
+    app.config.from_pyfile('config.py')
 auth = HTTPBasicAuth()
 
 # splash page
