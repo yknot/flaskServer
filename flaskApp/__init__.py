@@ -1,5 +1,5 @@
 # import flask
-from flask import Flask
+from flask import Flask, make_response, jsonify
 
 # SQLAlchemy connection
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -34,3 +34,16 @@ manager = APIManager(app, flask_sqlalchemy_db=db)
 
 # import all the views
 import flaskApp.views
+
+
+
+###### error handling  #######
+# 404 error
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error' : 'Not found'}), 404)
+
+# 400 error
+@app.errorhandler(400)
+def bad_request(error):
+    return make_response(jsonify({'error' : 'Bad request'}), 400)
