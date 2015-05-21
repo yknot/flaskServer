@@ -1,14 +1,12 @@
 # import flask
-# render_template for template folder
-# jsonify for json returns
-# abort for error handling
-# make_response for adding in response values
-# request for using post, put and delete
-from flask import Flask, render_template#, jsonify, abort, make_response, request
-# to authorize users
-# from flask.ext.httpauth import HTTPBasicAuth
+from flask import Flask
+
 # SQLAlchemy connection
 from flask.ext.sqlalchemy import SQLAlchemy
+
+# import manager to create apis
+from flask.ext.restless import APIManager
+
 import os
 
 
@@ -26,15 +24,13 @@ if not (os.environ.get('IS_HEROKU', None)):
 # set database uri based on environment variable
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://andrewyale@localhost/testdb'
 
-#os.environ.get('DATABASE_URL')
 
 # startup db connection
 db = SQLAlchemy(app)
 
+# create api manager
+manager = APIManager(app, flask_sqlalchemy_db=db)
 
+
+# import all the views
 import flaskApp.views
-#
-# # splash page
-# @app.route('/')
-# def index():
-#     return render_template('index.html')
