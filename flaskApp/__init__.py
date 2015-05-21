@@ -14,15 +14,12 @@ import os
 app = Flask(__name__, instance_relative_config=True)
 
 # read standard production config file
-app.config.from_object('config')
+app.config.from_pyfile('config.py')
 
 # if not on Heroku read the instance config file
 # means you are on dev
-if not (os.environ.get('IS_HEROKU', None)):
-    app.config.from_pyfile('config.py')
-
-# set database uri based on environment variable
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://andrewyale@localhost/testdb'
+if (os.environ.get('IS_HEROKU', None)):
+    app.config.from_object('config')
 
 
 # startup db connection
