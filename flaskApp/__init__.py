@@ -1,25 +1,25 @@
-# import flask
+# import flask; make_response and jsonify for error handl
 from flask import Flask, make_response, jsonify
-
 # SQLAlchemy connection
 from flask.ext.sqlalchemy import SQLAlchemy
-
 # import manager to create apis
 from flask.ext.restless import APIManager
-
+# for checking environment variables
 import os
 
 
-# create app
+# create app with instance folder
 app = Flask(__name__, instance_relative_config=True)
 
-# read standard production config file
-app.config.from_pyfile('config.py')
 
-# if not on Heroku read the instance config file
-# means you are on dev
+
+# if on heroku read production config
 if (os.environ.get('IS_HEROKU', None)):
     app.config.from_object('config')
+
+# else on developement so read instance config file
+else:
+    app.config.from_pyfile('config.py')
 
 
 # startup db connection

@@ -1,8 +1,9 @@
+# import the database
 from flaskApp import db
 
 
 class Container(db.Model):
-    """docstring for Container"""
+    """Containers are the groups in which the items are located"""
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True)
 
@@ -13,7 +14,7 @@ class Container(db.Model):
 
 
 class Item(db.Model):
-    """docstring for Item"""
+    """Items are the objects stored in containers"""
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), unique=True)
 
@@ -24,7 +25,7 @@ class Item(db.Model):
 
 
 class ContainerItemRel(db.Model):
-    """docstring for ContainerItemRel"""
+    """the mapping to match the containers to items"""
     containerId = db.Column(db.Integer, primary_key=True)
     itemId = db.Column(db.Integer, primary_key=True)
     quantity = db.Column(db.Integer)
