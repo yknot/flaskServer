@@ -13,6 +13,11 @@ class Container(db.Model):
     def __init__(self, name):
         self.name = name
 
+    def serialize(self):
+        return {
+            'id' : self.id,
+            'name' : self.name
+        }
 
 
 class Item(db.Model):
@@ -36,3 +41,15 @@ class Item(db.Model):
         self.purchaseDate = purchaseDate
         self.expirationDate = expirationDate
         self.purchasePrice = purchasePrice
+
+
+    def serialize(self):
+        return{
+        'id' : self.id,
+        'containerId' : self.containerId,
+        'name' : self.name,
+        'quantity' : self.quantity,
+        'purchaseDate' : self.purchaseDate.isoformat(),
+        'expirationDate' : self.expirationDate.isoformat(),
+        'purchasePrice' : self.purchasePrice
+        }
