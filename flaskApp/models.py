@@ -1,6 +1,12 @@
 # import the database
 from flaskApp import db
 
+def serialize_date(d):
+    if d == None:
+        return None
+    else:
+        return d.isoformat()
+
 
 class Container(db.Model):
     """Containers are the groups in which the items are located"""
@@ -49,7 +55,7 @@ class Item(db.Model):
         'containerId' : self.containerId,
         'name' : self.name,
         'quantity' : self.quantity,
-        'purchaseDate' : self.purchaseDate.isoformat(),
-        'expirationDate' : self.expirationDate.isoformat(),
+        'purchaseDate' : serialize_date(self.purchaseDate),
+        'expirationDate' : serialize_date(self.expirationDate),
         'purchasePrice' : self.purchasePrice
         }
