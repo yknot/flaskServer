@@ -40,7 +40,7 @@ class Item(db.Model):
 
 
 
-    def __init__(self, name):
+    def __init__(self, containerId, name, quantity=1, purchaseDate=None, expirationDate=None, purchasePrice = None):
         self.containerId = containerId
         self.name = name
         self.quantity = quantity
