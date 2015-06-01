@@ -8,57 +8,6 @@ from flaskApp import app, db, manager
 # import the models
 from flaskApp.models import Container, Item
 
-###### api functions #######
-# list of tasks that the api can do
-@app.route('/api', methods=['GET'])
-def list_tasks():
-    # this is hardcoded since it to add tasks needs more coding
-    return jsonify({'tasks':['inventory']})
-
-
-
-###### inventories ###########
-# list inventories
-@app.route('/api/inventory', methods=['GET'])
-def list_inventories():
-    # get all inventories and call serialize on each
-    inventories = [i.serialize() for i in Container.query.all()]
-    # return as json
-    return jsonify(inventories = inventories)
-
-
-# modify/add inventory
-@app.route('/api/inventory', methods=['POST'])
-def add_inventory():
-    # if input is not correct error
-    if not request.json or 'name' not in request.json:
-        abort(400)
-    name = request.json['name']
-    # if container already exists
-    if len(Container.query.filter_by(name = name).all()) > 0:
-        abort(400)
-    # create new container
-    temp = Container(name)
-    # add and commit
-    db.session.add(temp)
-    db.session.commit()
-    # return name of new container
-    return jsonify({'created_inventory' : name})
-
-
-# delete inventory
-@app.route('/api/inventory/<name>', methods=['DELETE'])
-def delete_inventory(name):
-    # check to make sure 1 and only one record
-    if Container.query.filter_by(name = name).delete() == 1:
-        # if one record commit transaction
-        db.session.commit()
-        # return name of deleted container
-        return jsonify(deleted = {'name' : name})
-    else:
-        abort(404)
-
-
 
 ##### items ###########
 
@@ -148,11 +97,3 @@ def delete_item(name, item_id):
                 'inventory_name' : name})
     else:
         abort(404)
-
-
-
-######## Static pages ############
-# splash page
-@app.route('/')
-def index():
-    return render_template('index.html')
