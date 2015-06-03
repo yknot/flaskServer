@@ -6,7 +6,7 @@ from flask import render_template, jsonify, abort, request
 # import the app, the database, and the api manager
 from flaskApp import app, db, manager
 # import the models
-from flaskApp.models import Container, Item
+from flaskApp.models import Inventory, Item
 
 from item import *
 from inventory import *
