@@ -35,7 +35,7 @@ def add_inventory():
     db.session.add(temp)
     db.session.commit()
     # return name of new inventory
-    return jsonify({'created_inventory' : name})
+    return jsonify({'created_inventory' : temp.serialize()})
 
 
 # delete inventory
