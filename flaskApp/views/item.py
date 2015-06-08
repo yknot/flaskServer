@@ -85,7 +85,7 @@ def add_item(cName):
         return jsonify({'updated_item' : i.serialize()})
 
     elif len(items) > 1:
-        # delete items because can't determine
+        # delete items because can't determine which is which
         # this shouldn't happen because there shouldn't be dup names
         Item.query.filter_by(name = name, inventoryId = cid).delete()
 
