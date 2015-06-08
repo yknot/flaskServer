@@ -46,6 +46,39 @@ def chooseTask():
         return chooseTask()
 
 
+def printJSON(obj, depth):
+    if type(obj) == dict:
+        printJSONdict(obj, depth+1)
+    elif type(obj) == list:
+        printJSONlist(obj, depth+1)
+    elif type(obj) == str:
+        sys.stdout.write('"' + obj + '"')
+    else:
+        sys.stdout.write(str(obj))
+
+def printJSONdict(objDict, depth):
+    print '\t'*(depth-1) + '{'
+    for key, value in objDict.iteritems():
+        sys.stdout.write('\t'*depth)
+        printJSON(key, depth)
+        sys.stdout.write(' : ')
+        printJSON(value, depth)
+        print ','
+    sys.stdout.write('\t'*(depth-1) + '}')
+
+
+def printJSONlist(objList, depth):
+    print '['
+    for i in xrange(len(objList)):
+        printJSON(objList[i], depth)
+        if i == len(objList) - 1:
+            print
+            break
+        print ','
+    print '\t'*(depth-1) + ']'
+
+
+
 # class for Inventory
 class Inventory():
     """Inventory interaction class"""
@@ -86,7 +119,8 @@ class Inventory():
     def getItems(self):
         """get and print all items"""
         items = self.getAll()
-        print items
+        printJSON(items, 0)
+
 
 
     def getItem(self, name):
@@ -95,7 +129,7 @@ class Inventory():
         # look through items
         for i in items:
             if i['name'] == name:
-                print i
+                printJSON(i, 0)
                 return
 
         print 'Item not found'
@@ -144,9 +178,9 @@ class Inventory():
                                 , headers = {'content-type': 'application/json'})
         # show info about return
         if addRequest.ok:
-            print simplejson.loads(addRequest.text)
+            printJSON(simplejson.loads(addRequest.text), 0)
         else:
-            print addRequest.text
+            printJSON(simplejson.loads(addRequest.text), 0)
             print 'Item could not be added'
 
 
