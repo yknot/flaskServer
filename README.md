@@ -1,42 +1,74 @@
-flaskServer
-===========
+#flaskServer
 
-This is a flask server that runs on a heroku app, used for it's items api. Will interface with android app in the future but for now contains RESTful api at /api.
+This is a flask server that runs on a heroku app. There is a tasks API at /api
+
+##Tasks
+###Inventory
+* Multiple Inventories
+* Designed for food inventories but can be modified in the future
+* Functions
+	* Create inventory
+	* Create items
+	* Read inventories
+	* Update items
+	* Delete items
+	* Delete inventories
+* Inventory attributes
+	* id (auto generated PK)
+	* name
+* Item attributes (more can be added)
+	* id (auto generated PK)
+	* name
+	* quantity (nullable)
+	* purchaseDate (nullable)
+	* expirationDate (nullable)
+	* purchasePrice (nullable)
+
+	
+##Clients
+###APIInterface.py
+* Python command line interface for interacting with the API
+* Simple text outputs and prints in JSON
+* For testing purpsoes
+
+###Android App...
+* In Developement
 
 
+##File structure
 
-File structure
 
-	/config.py
-	/Procfile
-	/requirements.txt
-	/run.py
-	/shell.py
-	/instance.py
-		/config.py
-	/flaskApp
+	/flaskApp/
+		/static/ - Will hold css and static images 
+		/templates/ - Holds template webpages like the splash page 
+			index.html
+		/views - Holds the views for the api
+			/__init__.py
+				import views
+				routes to / and /api
+			/inventory.py
+				select * - GET /api/inventory
+				insert - POST /api/inventory
+				delete - DELETE /api/inventory/<name>
+			/item.py
+				select * - GET /api/inventory/<name>
+				select 1 - GET /api/inventory/<name>/<int:item_id>
+				insert/update - POST /api/inventory/<name>
+				delete - DELETE /api/inventory/<name>/<int:item_id>
 		/__init__.py
-		/models.py
-		/views.py
-		/static/
-		/templates/
-			/index.html
-
-File purpose
-
-File  		       | Purpose
----------------- | -------------
-config.py        | Contains the configuration for production
-Procfile         | Contains the command to run server on production (Heroku specific)
-requirements.txt | List of python libraries that need to be installed to run 
-run.py           | Use `python run.py` to run locally in dev mode
-shell.py         | Run `./shell.py` to enter python shell with all libraries imported
-instance         | Local folder not tracked in git for dev configs
-flaskApp         | Folder in which the app is located
-\_\_init__.py    | Creates app, db connection, and other initilizations
-models.py        | Contains database models
-views.py         | Provides mapping to apis and template pages
-static           | Location of CSS, JS, and images
-templates        | Location of template html files like index.html
-
-
+			create flask app
+			imports
+			error handlers
+		/models.py - Holds the database models for the api
+			date serializer
+			define inventory
+				serializer
+			define item
+				serializer
+	/config.py - Config for production (overwritten by instance folder on dev)
+	/Procfile - Startup file for heroku
+	/README.md - Documentation
+	/requirements.txt - python requirements
+	/run.py - runs the app
+	/shell.py - runs a shell with the app imported
+	/APIinterface.py - python CLI for the api
