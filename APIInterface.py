@@ -46,35 +46,53 @@ def chooseTask():
         return chooseTask()
 
 
+# call this to print json with depth 0
 def printJSON(obj, depth):
+    # call print function for nested dict or list with higher depth
     if type(obj) == dict:
         printJSONdict(obj, depth+1)
     elif type(obj) == list:
         printJSONlist(obj, depth+1)
+    # else print string or numeric
     elif type(obj) == str:
         sys.stdout.write('"' + obj + '"')
     else:
         sys.stdout.write(str(obj))
 
 def printJSONdict(objDict, depth):
+    # print surrounding brackets one depth out
     print '\t'*(depth-1) + '{'
+    first = True
+    # loop and print values
     for key, value in objDict.iteritems():
+        # if first time don't print trailing ,
+        if first == True:
+            first = False
+        else:
+            print ','
         sys.stdout.write('\t'*depth)
         printJSON(key, depth)
         sys.stdout.write(' : ')
         printJSON(value, depth)
-        print ','
+
+    print
     sys.stdout.write('\t'*(depth-1) + '}')
 
 
 def printJSONlist(objList, depth):
+    # print surrrounding braces one depth out
     print '['
-    for i in xrange(len(objList)):
-        printJSON(objList[i], depth)
-        if i == len(objList) - 1:
-            print
-            break
-        print ','
+    first = True
+    # print each object in list
+    for o in objList:
+        # if first time don't print trailing ,
+        if first == True:
+            first = False
+        else:
+            print ','
+        printJSON(o, depth)
+
+    print
     print '\t'*(depth-1) + ']'
 
 
