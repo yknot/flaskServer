@@ -2,8 +2,6 @@
 from flask import Flask, make_response, jsonify
 # SQLAlchemy connection
 from flask.ext.sqlalchemy import SQLAlchemy
-# import manager to create apis
-from flask.ext.restless import APIManager
 # for checking environment variables
 import os
 
@@ -24,9 +22,6 @@ else:
 
 # startup db connection
 db = SQLAlchemy(app)
-
-# create api manager
-manager = APIManager(app, flask_sqlalchemy_db=db)
 
 
 # import all the views

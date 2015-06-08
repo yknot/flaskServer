@@ -4,7 +4,7 @@
 # request for POST methods
 from flask import render_template, jsonify, abort, request
 # import the app, the database, and the api manager
-from flaskApp import app, db, manager
+from flaskApp import app, db
 # import the models
 from flaskApp.models import Inventory, Item
 
