@@ -113,19 +113,55 @@ class Inventory():
         for j in xrange(len(invList)):
             print str(j + 1) + ') ' + invList[j]['name']
 
+        # create inventory option
+        print str(len(invList) + 1) + ') Create New Inventory'
+
         # get option
         invOption = raw_input()
-        invOption = sanatizeDigit(invOption, len(invList))
+        invOption = sanatizeDigit(invOption, len(invList)+1)
 
         # if not None
         if invOption:
-            self.inventory = invList[invOption-1]['name']
-            self.inventoryId = invList[invOption-1]['id']
-            self.url = URL + '/inventory/' + self.inventory
+            if invOption == len(invList) + 1:
+                self.addInventory()
+            else:
+                self.inventory = invList[invOption-1]['name']
+                self.inventoryId = invList[invOption-1]['id']
+                self.url = URL + '/inventory/' + self.inventory
         else:
             print 'Invalid option'
             print
             self.__init__()
+
+    def addInventory(self):
+        """creates new inventory and sets itself to point to it"""
+
+        print 'Input new inventory name:'
+
+        newName = raw_input()
+
+        # format them in json
+        inventory = simplejson.dumps({
+            'name': newName
+        })
+
+        # add/update item
+        addRequest = requests.post(URL + '/inventory'
+                                , inventory
+                                , headers = {'content-type': 'application/json'})
+
+        # show info about return
+        if addRequest.ok:
+            printJSON(simplejson.loads(addRequest.text), 0)
+        else:
+            printJSON(simplejson.loads(addRequest.text), 0)
+            print 'Inventory could not be added'
+            self.addInventory()
+            return
+
+        self.inventory = newName
+        self.inventoryId = simplejson.loads(addRequest.text)['created_inventory']['id']
+        self.url = URL + '/inventory/' + self.inventory
 
     def getAll(self):
         """gets all of the items in inventory"""
@@ -244,11 +280,11 @@ if task == 'inventory':
         print '''
 Please give a command
 Usage:
-get                             returns all items
-get <item_name>                 returns item with name given if exists
-add <item_name> <quantity>      add or update an item with that name and attributes
-delete <item_name>              delete item with that name
-exit                            exit out and choose another inventory'''
+get                                                                             returns all items
+get <item_name>                                                                 returns item with name given if exists
+add <item_name> <quantity> <purchaseDate> <expirationDate> <purchasePrice>      add or update an item with that name and attributes
+delete <item_name>                                                              delete item with that name
+exit                                                                            exit out and choose another inventory'''
 
         cmd = raw_input()
         print
