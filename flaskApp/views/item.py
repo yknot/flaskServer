@@ -73,7 +73,11 @@ def add_item(cName):
         i = items[0]
 
         if 'quantity' in request.json:
-            i.quantity = request.json['quantity']
+            # no negative quantities
+            if int(request.json['quantity']) <= 0:
+                i.quantity = 0
+            else:
+                i.quantity = request.json['quantity']
         if 'purchaseDate' in request.json:
             i.purchaseDate = request.json['purchaseDate']
         if 'expirationDate' in request.json:
@@ -93,7 +97,11 @@ def add_item(cName):
     temp = Item(cid, name)
 
     if 'quantity' in request.json:
-        temp.quantity = request.json['quantity']
+        # no negative quantities
+        if int(request.json['quantity']) <= 0:
+            temp.quantity = 0
+        else:
+            temp.quantity = request.json['quantity']
     if 'purchaseDate' in request.json:
         temp.purchaseDate = request.json['purchaseDate']
     if 'expirationDate' in request.json:
