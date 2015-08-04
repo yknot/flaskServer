@@ -16,7 +16,7 @@ from inventory import *
 @app.route('/api', methods=['GET'])
 def list_tasks():
     # this is hardcoded since it to add tasks needs more coding
-    return jsonify({'tasks':['inventory']})
+    return jsonify({'tasks':[{'title':'Inventory', 'description':'Inventories of pantry, freezer, etc.'}]})
 
 
 
