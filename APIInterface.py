@@ -31,7 +31,7 @@ def chooseTask():
     print 'Select a task:'
     # list tasks
     for i in xrange(len(taskList)):
-        print str(i + 1) + ') ' + taskList[i]
+        print str(i + 1) + ') ' + taskList[i]['title']
 
     # enter task based on input
     taskOption = raw_input()
@@ -39,7 +39,7 @@ def chooseTask():
 
     # if not None
     if taskOption:
-        return taskList[taskOption-1]
+        return taskList[taskOption-1]['title']
     else:
         print 'Invalid option please try again'
         print
@@ -270,7 +270,7 @@ task = chooseTask()
 print
 
 # task: inventory
-if task == 'inventory':
+if task.lower() == 'inventory':
     # list out inventories with new as option
     # select inventory
     inv = Inventory()
