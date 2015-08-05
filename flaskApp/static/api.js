@@ -1,6 +1,8 @@
 function TasksViewModel() {
        var self = this;
-       self.tasksURI = 'http://localhost:5000/api';
+       var getUrl = window.location;
+       var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+       self.tasksURI = baseUrl + 'api';
       // self.username = "miguel";
       //  self.password = "python";
        self.tasks = ko.observableArray();
@@ -27,7 +29,6 @@ function TasksViewModel() {
 
        self.ajax(self.tasksURI, 'GET').done(function(data) {
            for (var i = 0; i < data.tasks.length; i++) {
-              console.log(data.tasks[i].title)
                self.tasks.push({
                    title: ko.observable(data.tasks[i].title),
                    description: ko.observable(data.tasks[i].description)
