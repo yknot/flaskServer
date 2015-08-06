@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<title>API Client</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="static/bootstrap-combined.min.css" rel="stylesheet">
+	<script src="static/jquery-1.9.0.js"></script>
+	<script src="static/bootstrap.min.js"></script>
+	<script src="static/knockout-2.2.1.js"></script>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <a class="brand" href="#">API Client</a>
+        <ul data-bind="foreach: tasks" class="nav">
+          <li><a href="/">Task List</a></li>
+          <li class="active"><a href="#">inventory</a><li>
+          <!-- <li><a data-bind="text: title, attr: {href: title}"></a></li> -->
+        </ul>
+      </div>
+    </div>
+	<div id="inv" class="container">
+	  <table class="table table-striped">
+		<tr><td><b>Inventory</b></td><td><b>Items</b></td><td><b>Quantity</b></td><td><b>Options</b></td></tr>
+		<tbody data-bind="foreach: inventories">
+		  <tr>
+			<td><p><b data-bind="text: title"></b></p></td>
+      <table id="items" class="table table-striped">
+        <tbody data-bind="foreach: items">
+          <tr>
+          <td><p><span data-bind="text: item"></span></p></td>
+          <td><p><span data-bind="text: quantity"></span></p></td>
+          <td><button class="btn">Select</button></td>
+        </tr>
+        </tbody>
+      </table>
+		  </tr>
+		</tbody>
+	  </table>
+	</div>
+	<script src="static/inventory.js"></script>
+  </body>
+</html>

@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>API Client</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="static/bootstrap-combined.min.css" rel="stylesheet">
-<script src="static/jquery-1.9.0.js"></script>
-<script src="static/bootstrap.min.js"></script>
-<script src="static/knockout-2.2.1.js"></script>
-</head>
-<body>
+  <head>
+	<title>API Client</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="static/bootstrap-combined.min.css" rel="stylesheet">
+	<script src="static/jquery-1.9.0.js"></script>
+	<script src="static/bootstrap.min.js"></script>
+	<script src="static/knockout-2.2.1.js"></script>
+  </head>
+  <body>
     <div class="navbar">
-        <div class="navbar-inner">
-            <a class="brand" href="#">API Client</a>
-        </div>
+      <div class="navbar-inner">
+        <a class="brand" href="#">API Client</a>
+        <ul data-bind="foreach: tasks" class="nav">
+          <li class="active"><a href="#">Task List</a></li>
+          <li><a data-bind="text: title, attr: {href: title}"></a></li>
+        </ul>
+      </div>
     </div>
-    <div id="main" class="container">
+	<div id="main" class="container">
       <table class="table table-striped">
-  <tr><td><b>Task</b></td><td><b>Options</b></td></tr>
-  <!-- ko foreach: tasks -->
-  <tr>
-      <td><p><b data-bind="text: title"></b></p><p data-bind="text: description"></p></td>
-      <td>
-          <button data-bind="click: $parent.beginEdit" class="btn">Select</button>
-      </td>
-  </tr>
-  <!-- /ko -->
-
-  <script src="static/api.js"></script>
-</table>
-    </div>
-</body>
+		<tr><td><b>Task</b></td><td></td></tr>
+		<tbody data-bind="foreach: tasks">
+		  <tr>
+			<td><p><b data-bind="text: title"></b></p><p data-bind="text: description"></p></td>
+			<td>
+			  <button data-bind="click: $parent.select" class="btn" >Select</button>
+			</td>
+		  </tr>
+		</tbody>
+	  </table>
+	</div>
+	<script src="static/api.js"></script>
+  </body>
 </html>
