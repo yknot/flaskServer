@@ -16,7 +16,7 @@ from inventory import *
 @app.route('/api', methods=['GET'])
 def list_tasks():
     # this is hardcoded since it to add tasks needs more coding
-    return jsonify({'tasks':[{'title':'Inventory', 'description':'Inventories of pantry, freezer, etc.'}]})
+    return jsonify({'tasks':[{'title':'inventory', 'description':'Inventories of pantry, freezer, etc.'}]})
 
 
 
@@ -25,3 +25,7 @@ def list_tasks():
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/inventory')
+def inventory():
+    return render_template('inventory.html')

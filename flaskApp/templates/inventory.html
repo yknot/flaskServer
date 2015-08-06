@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<title>API Client</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="static/bootstrap-combined.min.css" rel="stylesheet">
+	<script src="static/jquery-1.9.0.js"></script>
+	<script src="static/bootstrap.min.js"></script>
+	<script src="static/knockout-2.2.1.js"></script>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <a class="brand" href="#">API Client</a>
+        <ul data-bind="foreach: tasks" class="nav">
+          <li><a href="/">Task List</a></li>
+          <li class="active"><a href="#">inventory</a><li>
+          <!-- <li><a data-bind="text: title, attr: {href: title}"></a></li> -->
+        </ul>
+      </div>
+    </div>
+	<div id="inv" class="container">
+	  <table class="table table-striped">
+		<tr><td><b>Inventory</b></td><td><b>Items</b></td><td><b>Quantity</b></td><td><b>Options</b></td></tr>
+		<tbody data-bind="foreach: inventories">
+		  <tr>
+			<td ><p><b data-bind="text: title"></b></p></td>
+			<td data-bind="foreach: items"><p data-bind="text: item"></p></td>
+      <td data-bind="foreach: items"><p data-bind="text: quantity"></p></td>
+			<td data-bind="foreach: items">
+        <p>
+        <div class="btn-group btn-group-xs" role="group" aria-label="...">
+            <button data-bind="click: $parent.edit" class="btn-xs btn-info btn">Edit</button>
+            <button data-bind="click: $parent.delete" class="btn-xs btn-danger btn">Delete</button>
+        </div>
+      </p>
+			</td>
+		  </tr>
+		</tbody>
+	  </table>
+	</div>
+	<script src="static/inventory.js"></script>
+  </body>
+</html>
